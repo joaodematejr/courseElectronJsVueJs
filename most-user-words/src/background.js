@@ -24,15 +24,22 @@ async function createWindow() {
     }
   })
 
+  win.webContents.on('did-finish-load', () => {
+    const {title, version} = require('../package.json')
+    win.setTitle(`${title} :: ${version}`)
+  })
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
+    //if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
+ 
 }
 
 // Quit when all windows are closed.

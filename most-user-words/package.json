@@ -1,5 +1,6 @@
 {
   "name": "most-user-words",
+  "title": "Most User Worlds",
   "version": "0.1.0",
   "private": true,
   "scripts": {
