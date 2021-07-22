@@ -32,19 +32,16 @@ export default {
   data: function () {
     return {
       files: [],
-      groupeWords: [
-        { name: "you", amount: 900 },
-        { name: "satan", amount: 666 },
-        { name: "i", amount: 665 },
-        { name: "he", amount: 668 },
-      ],
+      groupeWords: [],
     };
   },
   methods: {
     processSubtitles() {
-      ipcRenderer.send("blabla", "ping");
-      ipcRenderer.on("blabla", (event, resp) => {
-        console.log(resp);
+      const paths = this.files.map(f => f.path);
+      console.log("this.files", this.files);
+      ipcRenderer.send("process-subtitles", paths);
+      ipcRenderer.on("process-subtitles", (event, resp) => {
+        this.groupeWords = resp;
       });
     },
   },
