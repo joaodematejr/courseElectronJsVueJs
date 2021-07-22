@@ -1,7 +1,16 @@
 <template>
   <v-container fluid>
     <v-form>
-      <v-file-input outlined append-outer-icon="mdi-send" prepend-icon="mdi-message-text" label="Selecione as Legendas" multiple chips v-model="files" @click:append-outer="processSubtitles"/>
+      <v-file-input
+        outlined
+        append-outer-icon="mdi-send"
+        prepend-icon="mdi-message-text"
+        label="Selecione as Legendas"
+        multiple
+        chips
+        v-model="files"
+        @click:append-outer="processSubtitles"
+      />
     </v-form>
     <div class="pills">
       <Pill
@@ -15,6 +24,8 @@
 </template>
 
 <script>
+import { ipcRenderer } from "electron";
+
 import Pill from "./Pill";
 export default {
   components: { Pill },
@@ -31,7 +42,10 @@ export default {
   },
   methods: {
     processSubtitles() {
-      console.log(this.files);
+      ipcRenderer.send("blabla", "ping");
+      ipcRenderer.on("blabla", (event, resp) => {
+        console.log(resp);
+      });
     },
   },
 };
